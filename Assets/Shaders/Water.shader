@@ -1,58 +1,82 @@
 Shader "Unlit/Water"
 {
-    Properties
-    {
-        _MainTex ("Texture", 2D) = "white" {}
-    }
-    SubShader
-    {
-        Tags { "RenderType"="Opaque" }
-        LOD 100
+	Properties
+	{
+		_Color("Color", Color) = (1, 1, 1, 1)
+		_MainTex("Texture", 2D) = "white" {}
+		_Glossiness("Smoothness", Range(0,1)) = 0.5
+		_Metallic("Metallic", Range(0,1)) = 0.0
+		_WaveA("WaveA: Dir, Steepness, WaveLength", Vector) = (1, 0, 0.5, 10)
+		_WaveB("WaveB: Dir, Steepness, WaveLength", Vector) = (0, 1, 0.25, 20)
+		_WaveC("WaveC: Dir, Steepness, WaveLength", Vector) = (1, 1, 0.15, 10)
+	}
+		SubShader
+		{
+			Tags { "RenderType" = "Opaque" }
+			LOD 100
 
-        Pass
-        {
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
-            // make fog work
-            #pragma multi_compile_fog
+			CGPROGRAM
+			#pragma surface surf Standard fullforwardshadows vertex:vert addshadow
+			#pragma target 3.0 
 
-            #include "UnityCG.cginc"
+			sampler2D _MainTex;
 
-            struct appdata
-            {
-                float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
-            };
+			struct Input {
+				float2 uv_MainTex;
+				};
 
-            struct v2f
-            {
-                float2 uv : TEXCOORD0;
-                UNITY_FOG_COORDS(1)
-                float4 vertex : SV_POSITION;
-            };
+			half _Glossiness;
+			half _Metallic;
+			fixed4 _Color;
+			float4 _WaveA, _WaveB, _WaveC;
 
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
+			float3 GerstnerWave(float4 wave, float3 p, float3 tangent, inout float3 binormal) {
+				float steepness = wave.z;
+				float waveLength = wave.w;
+				float k = 2 * UNITY_PI / waveLength;
+				float c = sqrt(9.8 / k);
+				float2 d = normalize(wave.xy);
+				float f = k * (dot(d, p.xz) - c * _Time.y);
+				float a = steepness / k;
 
-            v2f vert (appdata v)
-            {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
-                return o;
-            }
+				tangent += float3(
+					-d.x * d.x * (steepness * sin(f)),
+					d.x * (steepness * cos(f)),
+					-d.x * d.y * (steepness * sin(f))
+					);
+				binormal += float3(
+					-d.x * d.y * (steepness * sin(f)),
+					d.y * (steepness * cos(f)),
+					-d.y * d.y * (steepness * sin(f))
+					);
+				return float3(
+					d.x * (a * cos(f)),
+					a * sin(f),
+					d.y * (a * cos(f))
+					);
+			}
 
-            fixed4 frag (v2f i) : SV_Target
-            {
-                // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
-                // apply fog
-                UNITY_APPLY_FOG(i.fogCoord, col);
-                return col;
-            }
-            ENDCG
-        }
-    }
+			void vert(inout appdata_full vertexData) {
+				float3 gridPoint = vertexData.vertex.xyz;
+				float3 tangent = float3(1, 0, 0);
+				float3 binormal = float3(0, 0, 1);
+				float3 p = gridPoint;
+				p += GerstnerWave(_WaveA, gridPoint, tangent, binormal);
+				p += GerstnerWave(_WaveB, gridPoint, tangent, binormal);
+				p += GerstnerWave(_WaveC, gridPoint, tangent, binormal);
+				float3 normal = normalize(cross(binormal, tangent));
+				vertexData.vertex.xyz = p;
+				vertexData.normal = normal;
+			}
+
+			void surf(Input IN, inout SurfaceOutputStandard o) {
+				fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+				o.Albedo = c.rgb;
+				o.Metallic = _Metallic;
+				o.Smoothness = _Glossiness;
+				o.Alpha = c.a;
+			}
+			ENDCG
+		}
+		Fallback "Diffuse"
 }
