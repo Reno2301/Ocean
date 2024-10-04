@@ -121,11 +121,14 @@ public class CornerBuoyancy : MonoBehaviour
             Quaternion currentRotation = rb.rotation;
 
             // Compute new rotation (only tilt, no Y-axis rotation changes)
-            Quaternion tiltRotation = Quaternion.LookRotation(slopeForward, Vector3.Cross(slopeRight, slopeForward).normalized);
-            Quaternion finalRotation = Quaternion.Euler(tiltRotation.eulerAngles.x, currentRotation.eulerAngles.y, tiltRotation.eulerAngles.z);
+            Quaternion targetTiltRotation = Quaternion.LookRotation(slopeForward, Vector3.Cross(slopeRight, slopeForward).normalized);
+            Quaternion finalRotation = Quaternion.Euler(targetTiltRotation.eulerAngles.x, currentRotation.eulerAngles.y, targetTiltRotation.eulerAngles.z);
 
-            // Apply the new rotation while preserving Y-axis rotation
-            rb.MoveRotation(finalRotation);
+            // Smooth the rotation using Quaternion.Lerp (linear interpolation)
+            Quaternion smoothRotation = Quaternion.Lerp(currentRotation, finalRotation, Time.deltaTime * 5f);  // Adjust the speed factor as needed (5f is arbitrary)
+
+            // Apply the smoothed rotation
+            rb.MoveRotation(smoothRotation);
         }
 
         // Check if the object has entered the water (i.e., if its Y position is below the water surface)
@@ -138,13 +141,15 @@ public class CornerBuoyancy : MonoBehaviour
             // Disable gravity and let the buoyancy take over
             rb.useGravity = false;
             rb.velocity = Vector3.zero;  // Stop falling velocity when buoyancy takes over
-        } else
+        }
+        else
         {
             inWater = false;
 
-            rb.useGravity = true;            
+            rb.useGravity = true;
         }
     }
+
 
     // Optional: Detect if the object leaves the water, to re-enable gravity if needed
     void OnTriggerExit(Collider other)
