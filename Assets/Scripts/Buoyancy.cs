@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CornerBuoyancy : MonoBehaviour
+public class Buoyancy : MonoBehaviour
 {
     public GameObject waterObject;  // The water object with the Gerstner wave shader
     private Material waterMaterial;
