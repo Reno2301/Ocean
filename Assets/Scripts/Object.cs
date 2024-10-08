@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class Buoyancy : MonoBehaviour
+public class Object : MonoBehaviour
 {
     public GameObject waterObject;  // The water object with the Gerstner wave shader
     private Material waterMaterial;
+    private WaveController waveController;
 
     private Vector4 waveA;
     private Vector4 waveB;
@@ -18,9 +19,12 @@ public class Buoyancy : MonoBehaviour
     private bool inWater = false;  // Track if the object is in water
 
     public float buoyancyForce = 10f;  // Controls how quickly the object floats up
+    public float rippleIntensity = 5f;  // Intensity of the ripple effect when the object hits the water
 
     void Start()
     {
+        waveController = GameObject.Find("WaveController").GetComponent<WaveController>();
+
         // Get the material of the water object
         if (waterObject != null)
         {
@@ -36,7 +40,7 @@ public class Buoyancy : MonoBehaviour
             rb = gameObject.AddComponent<Rigidbody>();
         }
 
-        // Disable gravity initially if the object is in the sky
+        // Enable gravity initially if the object is in the sky
         rb.useGravity = true;
 
         // Allow rotation on the Y-axis by ensuring constraints are off
@@ -75,18 +79,20 @@ public class Buoyancy : MonoBehaviour
     // Calculate the water height at a specific position
     public float GetWaterHeight(Vector3 position, float time)
     {
+        // Update the wave parameters from the shader
+        UpdateWaveParameters();
+
+        // Calculate the height using the same Gerstner wave formulas.
         Vector3 waveAHeight = GerstnerWave(waveA, position, time);
         Vector3 waveBHeight = GerstnerWave(waveB, position, time);
         Vector3 waveCHeight = GerstnerWave(waveC, position, time);
 
+        // Sum the contributions from each wave for the final height.
         return waveAHeight.y + waveBHeight.y + waveCHeight.y;
     }
 
     void Update()
     {
-        // Update the wave parameters from the shader
-        UpdateWaveParameters();
-
         float time = Time.time;
 
         // Check if the object is already in water
@@ -110,7 +116,6 @@ public class Buoyancy : MonoBehaviour
             // Apply buoyancy effect by moving the object toward the water surface
             Vector3 newPosition = transform.position;
             newPosition.y = Mathf.Lerp(transform.position.y, averageHeight, Time.deltaTime * buoyancyForce);
-
             rb.MovePosition(newPosition);
 
             // Calculate tilt/rotation based on the heights at the corners
@@ -142,14 +147,12 @@ public class Buoyancy : MonoBehaviour
             rb.useGravity = false;
             rb.velocity = Vector3.zero;  // Stop falling velocity when buoyancy takes over
         }
-        else
+        else if (transform.position.y > waterHeightAtCenter)
         {
             inWater = false;
-
             rb.useGravity = true;
         }
     }
-
 
     // Optional: Detect if the object leaves the water, to re-enable gravity if needed
     void OnTriggerExit(Collider other)
@@ -159,6 +162,14 @@ public class Buoyancy : MonoBehaviour
             // Object has left the water
             inWater = false;
             rb.useGravity = true;  // Re-enable gravity if the object leaves the water
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == waterObject)
+        {
+            waveController.AddRipple(this.transform.position, rippleIntensity);
         }
     }
 }
