@@ -20,15 +20,15 @@ public class WaveController : MonoBehaviour
         {
             waterMaterial = waterObject.GetComponent<Renderer>().material;
         }
+        SetWaveParameters();
     }
 
     void Update()
     {
-        UpdateWaveParameters();
         UpdateRipples();
     }
 
-    void UpdateWaveParameters()
+    void SetWaveParameters()
     {
         if (waterMaterial != null)
         {

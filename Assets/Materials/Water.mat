@@ -72,8 +72,8 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RippleFrequency: 2
-    - _RippleSize: 10
+    - _RippleFrequency: 2.5
+    - _RippleSize: 8
     - _RippleSpeed: 4
     - _RippleStartDistance: 2
     - _SmoothnessTextureChannel: 0
