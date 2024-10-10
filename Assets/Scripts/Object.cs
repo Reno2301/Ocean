@@ -23,7 +23,7 @@ public class Object : MonoBehaviour
 
     void Start()
     {
-        waveController = GameObject.Find("WaveController").GetComponent<WaveController>();
+        waveController = waterObject.GetComponent<WaveController>();
 
         // Get the material of the water object
         if (waterObject != null)
