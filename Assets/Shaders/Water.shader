@@ -83,7 +83,7 @@ Shader "Unlit/Water"
                 if (effectiveDistance <= expandingRadius)
                 {
                     float attenuation = max(0, 1 - (effectiveDistance / _RippleSize));
-                    float wave = sin(effectiveDistance * _RippleFrequency - timeSinceImpact * 2.0 * UNITY_PI) * attenuation * ripple.w;
+                    float wave = sin(effectiveDistance * (_RippleFrequency * 0.5) - timeSinceImpact * 2.0 * UNITY_PI) * attenuation * ripple.w;
 
                     float3 displacement = float3(0, wave, 0);
 
