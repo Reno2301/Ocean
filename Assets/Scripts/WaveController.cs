@@ -11,9 +11,6 @@ public class WaveController : MonoBehaviour
 
     private Material waterMaterial;
 
-    // Stores ripple data: position, time, and intensity
-    private List<Vector4> ripples = new List<Vector4>();
-
     void Start()
     {
         if (waterObject != null)
@@ -40,23 +37,12 @@ public class WaveController : MonoBehaviour
 
     void UpdateRipples()
     {
-        if (waterMaterial != null && ripples.Count > 0)
-        {
-            // Update ripple data in the shader (limited by a max number of ripples)
-            for (int i = 0; i < ripples.Count; i++)
-            {
-                waterMaterial.SetVector($"_Ripple{i}", ripples[i]);
-            }
-        }
+        // Update ripple data in the shader (limited by _MaxRipples)
     }
 
-    // This method would be called when an object collides with the water
-    public void AddRipple(Vector3 position, float intensity)
+    // This method is called when an object collides with the water to add a new ripple
+    public void AddRipple()
     {
-        // Store position and time of the ripple
-        ripples.Add(new Vector4(position.x, position.z, Time.time, intensity));
-
-        // Limit number of active ripples to prevent performance issues
-        if (ripples.Count > 10) ripples.RemoveAt(0);
+        //Add Ripple effect to a certain position
     }
 }

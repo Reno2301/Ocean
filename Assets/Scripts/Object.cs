@@ -23,19 +23,6 @@ public class Object : MonoBehaviour
     public int floatersUnderWater;
     bool underWater;
 
-
-    /*    public Transform frontLeftCorner;
-        public Transform frontRightCorner;
-        public Transform backLeftCorner;
-        public Transform backRightCorner;
-
-        private Rigidbody rb;  // Rigidbody for physics (falling and rotation)
-        private bool inWater = false;  // Track if the object is in water
-
-        public float buoyancyForce = 10f;  // Controls how quickly the object floats up*/
-
-    public float rippleIntensity = 5f;  // Intensity of the ripple effect when the object hits the water
-
     void Start()
     {
         waterObject = GameObject.FindGameObjectWithTag("Water");
@@ -160,8 +147,13 @@ public class Object : MonoBehaviour
     {
         if (other.gameObject == waterObject)
         {
-            // Add a ripple
+            TriggerRippleEffect();
         }
+    }
+
+    void TriggerRippleEffect()
+    {
+        // Add the ripple effect
     }
 
     void OnTriggerExit(Collider other)

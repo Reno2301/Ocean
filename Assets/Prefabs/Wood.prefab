@@ -285,4 +285,6 @@ MonoBehaviour:
   airAngularDrag: 0.05
   floatingPower: 20
   floatersUnderWater: 0
+  rippleSize: 5
   rippleIntensity: 0.3
+  rippleFrequency: 1
