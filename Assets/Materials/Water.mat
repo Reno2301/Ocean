@@ -73,7 +73,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _RippleFrequency: 2.5
-    - _RippleSize: 8
+    - _RippleSize: 15.4
     - _RippleSpeed: 4
     - _RippleStartDistance: 2
     - _SmoothnessTextureChannel: 0
@@ -84,7 +84,7 @@ Material:
     m_Colors:
     - _Color: {r: 0.38501248, g: 0.5495326, b: 0.7924528, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Ripple0: {r: 0, g: 0, b: 0, a: 0}
+    - _Ripple0: {r: 0, g: 0, b: 5.09, a: 0.5}
     - _Ripple1: {r: 0, g: 0, b: 0, a: 0}
     - _Ripple2: {r: 0, g: 0, b: 0, a: 0}
     - _Ripple3: {r: 0, g: 0, b: 0, a: 0}
@@ -97,4 +97,6 @@ Material:
     - _WaveA: {r: 1, g: 0, b: 0.05, a: 16}
     - _WaveB: {r: 1, g: 0.6, b: 0.1, a: 20}
     - _WaveC: {r: 1, g: 1.8, b: 0.2, a: 12}
+    - _WaveD: {r: -0.5, g: -0.2, b: 0.1, a: 10}
+    - _WaveE: {r: -1, g: -0.5, b: 0.05, a: 10}
   m_BuildTextureStacks: []

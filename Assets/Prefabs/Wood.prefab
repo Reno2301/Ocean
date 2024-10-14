@@ -222,7 +222,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6780649559643617192}
   serializedVersion: 4
-  m_Mass: 0.5
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -274,9 +274,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3aea5859a2636c45b5c5e794e0f6334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterObject: {fileID: 0}
-  frontLeftCorner: {fileID: 3668333048528815301}
-  frontRightCorner: {fileID: 3769872166180415585}
-  backLeftCorner: {fileID: 3595909684633174132}
-  backRightCorner: {fileID: 929563854545218230}
-  buoyancyForce: 10
+  floaters:
+  - {fileID: 3595909684633174132}
+  - {fileID: 929563854545218230}
+  - {fileID: 3668333048528815301}
+  - {fileID: 3769872166180415585}
+  underwaterDrag: 4
+  underwaterAngularDrag: 4
+  airDrag: 0
+  airAngularDrag: 0.05
+  floatingPower: 20
+  floatersUnderWater: 0
+  rippleIntensity: 0.3

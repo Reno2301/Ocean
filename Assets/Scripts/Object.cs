@@ -1,8 +1,9 @@
+using System.Collections;
 using UnityEngine;
 
 public class Object : MonoBehaviour
 {
-    public GameObject waterObject;  // The water object with the Gerstner wave shader
+    private GameObject waterObject;
     private Material waterMaterial;
     private WaveController waveController;
 
@@ -10,19 +11,34 @@ public class Object : MonoBehaviour
     private Vector4 waveB;
     private Vector4 waveC;
 
-    public Transform frontLeftCorner;
-    public Transform frontRightCorner;
-    public Transform backLeftCorner;
-    public Transform backRightCorner;
+    public Transform[] floaters;
+    public float underwaterDrag = 3f;
+    public float underwaterAngularDrag = 1f;
+    public float airDrag = 0f;
+    public float airAngularDrag = 0.05f;
+    public float floatingPower = 15f;
 
-    private Rigidbody rb;  // Rigidbody for physics (falling and rotation)
-    private bool inWater = false;  // Track if the object is in water
+    private Rigidbody rb;
 
-    public float buoyancyForce = 10f;  // Controls how quickly the object floats up
+    public int floatersUnderWater;
+    bool underWater;
+
+
+    /*    public Transform frontLeftCorner;
+        public Transform frontRightCorner;
+        public Transform backLeftCorner;
+        public Transform backRightCorner;
+
+        private Rigidbody rb;  // Rigidbody for physics (falling and rotation)
+        private bool inWater = false;  // Track if the object is in water
+
+        public float buoyancyForce = 10f;  // Controls how quickly the object floats up*/
+
     public float rippleIntensity = 5f;  // Intensity of the ripple effect when the object hits the water
 
     void Start()
     {
+        waterObject = GameObject.FindGameObjectWithTag("Water");
         waveController = waterObject.GetComponent<WaveController>();
 
         // Get the material of the water object
@@ -42,9 +58,6 @@ public class Object : MonoBehaviour
 
         // Enable gravity initially if the object is in the sky
         rb.useGravity = true;
-
-        // Allow rotation on the Y-axis by ensuring constraints are off
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
     // Update the wave parameters from the shader
@@ -91,77 +104,55 @@ public class Object : MonoBehaviour
         return waveAHeight.y + waveBHeight.y + waveCHeight.y;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         float time = Time.time;
+        floatersUnderWater = 0;
 
-        // Check if the object is already in water
-        if (inWater)
+        for (int i = 0; i < floaters.Length; i++)
         {
-            // Get the positions of the corners
-            Vector3 frontLeftPos = frontLeftCorner.position;
-            Vector3 frontRightPos = frontRightCorner.position;
-            Vector3 backLeftPos = backLeftCorner.position;
-            Vector3 backRightPos = backRightCorner.position;
+            // Calculate the difference between floater height and water height at its position
+            float waterHeight = GetWaterHeight(floaters[i].position, time);
+            float floaterHeight = floaters[i].position.y;
+            float difference = floaterHeight - waterHeight;
 
-            // Get water heights at each corner
-            float heightFL = GetWaterHeight(frontLeftPos, time);
-            float heightFR = GetWaterHeight(frontRightPos, time);
-            float heightBL = GetWaterHeight(backLeftPos, time);
-            float heightBR = GetWaterHeight(backRightPos, time);
+            // If floater is below water, apply buoyancy force
+            if (difference < 0)
+            {
+                // Calculate the upward buoyancy force proportional to how far under water it is
+                Vector3 buoyancyForce = Vector3.up * floatingPower * Mathf.Abs(difference);
+                rb.AddForceAtPosition(buoyancyForce, floaters[i].position, ForceMode.Force);
 
-            // Calculate the average height
-            float averageHeight = (heightFL + heightFR + heightBL + heightBR) / 4.0f;
+                // Increment the number of floaters under water
+                floatersUnderWater++;
 
-            // Apply buoyancy effect by moving the object toward the water surface
-            Vector3 newPosition = transform.position;
-            newPosition.y = Mathf.Lerp(transform.position.y, averageHeight, Time.deltaTime * buoyancyForce);
-            rb.MovePosition(newPosition);
-
-            // Calculate tilt/rotation based on the heights at the corners
-            Vector3 slopeForward = new Vector3(0, (heightFR + heightFL) / 2.0f - (heightBR + heightBL) / 2.0f, Vector3.Distance(frontLeftPos, backLeftPos)).normalized;
-            Vector3 slopeRight = new Vector3(Vector3.Distance(frontLeftPos, frontRightPos), (heightFR + heightBR) / 2.0f - (heightFL + heightBL) / 2.0f, 0).normalized;
-
-            // Keep current Y-axis rotation
-            Quaternion currentRotation = rb.rotation;
-
-            // Compute new rotation (only tilt, no Y-axis rotation changes)
-            Quaternion targetTiltRotation = Quaternion.LookRotation(slopeForward, Vector3.Cross(slopeRight, slopeForward).normalized);
-            Quaternion finalRotation = Quaternion.Euler(targetTiltRotation.eulerAngles.x, currentRotation.eulerAngles.y, targetTiltRotation.eulerAngles.z);
-
-            // Smooth the rotation using Quaternion.Lerp (linear interpolation)
-            Quaternion smoothRotation = Quaternion.Lerp(currentRotation, finalRotation, Time.deltaTime * 5f);  // Adjust the speed factor as needed (5f is arbitrary)
-
-            // Apply the smoothed rotation
-            rb.MoveRotation(smoothRotation);
+                if (!underWater)
+                {
+                    underWater = true;
+                    SwitchState(true);
+                }
+            }
         }
 
-        // Check if the object has entered the water (i.e., if its Y position is below the water surface)
-        float waterHeightAtCenter = GetWaterHeight(transform.position, time);
-        if (transform.position.y <= waterHeightAtCenter && !inWater)
+        if (underWater && floatersUnderWater == 0)
         {
-            // The object is now in the water
-            inWater = true;
-
-            // Disable gravity and let the buoyancy take over
-            rb.useGravity = false;
-            rb.velocity = Vector3.zero;  // Stop falling velocity when buoyancy takes over
-        }
-        else if (transform.position.y > waterHeightAtCenter)
-        {
-            inWater = false;
-            rb.useGravity = true;
+            underWater = false;
+            SwitchState(false);
         }
     }
 
-    // Optional: Detect if the object leaves the water, to re-enable gravity if needed
-    void OnTriggerExit(Collider other)
+    //use air or underwater drag and angulardrag
+    void SwitchState(bool isUnderwater)
     {
-        if (other.gameObject == waterObject)
+        if (isUnderwater)
         {
-            // Object has left the water
-            inWater = false;
-            rb.useGravity = true;  // Re-enable gravity if the object leaves the water
+            rb.drag = underwaterDrag;
+            rb.angularDrag = underwaterAngularDrag;
+        }
+        else
+        {
+            rb.drag = airDrag;
+            rb.angularDrag = airAngularDrag;
         }
     }
 
@@ -169,7 +160,23 @@ public class Object : MonoBehaviour
     {
         if (other.gameObject == waterObject)
         {
-            waveController.AddRipple(this.transform.position, rippleIntensity);
+            // Add a ripple
         }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject == waterObject)
+        {
+            // Optionally, you can fade the ripple smoothly
+            StartCoroutine(FadeRippleOut());
+        }
+    }
+
+    // Coroutine to fade out the ripple over time
+    private IEnumerator FadeRippleOut()
+    {
+        yield return new WaitForEndOfFrame();
+        //Fade out ripple
     }
 }
