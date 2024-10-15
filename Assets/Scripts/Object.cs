@@ -143,18 +143,8 @@ public class Object : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == waterObject)
-        {
-            TriggerRippleEffect();
-        }
-    }
 
-    void TriggerRippleEffect()
-    {
-        // Add the ripple effect
-    }
+
 
     void OnTriggerExit(Collider other)
     {

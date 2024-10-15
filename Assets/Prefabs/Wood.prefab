@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 6584438967769615559}
   m_Layer: 0
   m_Name: Wood
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -285,6 +285,3 @@ MonoBehaviour:
   airAngularDrag: 0.05
   floatingPower: 20
   floatersUnderWater: 0
-  rippleSize: 5
-  rippleIntensity: 0.3
-  rippleFrequency: 1

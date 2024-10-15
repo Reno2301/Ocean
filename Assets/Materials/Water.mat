@@ -72,11 +72,41 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OffsetX0: 0
+    - _OffsetX1: 0
+    - _OffsetX2: 0
+    - _OffsetX3: 0
+    - _OffsetX4: 0
+    - _OffsetX5: 0
+    - _OffsetX6: 0
+    - _OffsetX7: 0
+    - _OffsetX8: 0
+    - _OffsetX9: 0
+    - _OffsetZ0: 0
+    - _OffsetZ1: 0
+    - _OffsetZ2: 0
+    - _OffsetZ3: 0
+    - _OffsetZ4: 0
+    - _OffsetZ5: 0
+    - _OffsetZ6: 0
+    - _OffsetZ7: 0
+    - _OffsetZ8: 0
+    - _OffsetZ9: 0
     - _Parallax: 0.02
-    - _RippleFrequency: 2.5
+    - _RippleAmplitude0: 0
+    - _RippleAmplitude1: 0
+    - _RippleAmplitude2: 0
+    - _RippleAmplitude3: 0
+    - _RippleAmplitude4: 0
+    - _RippleAmplitude5: 0
+    - _RippleAmplitude6: 0
+    - _RippleAmplitude7: 0
+    - _RippleAmplitude8: 0
+    - _RippleAmplitude9: 0
+    - _RippleFrequency: 2
     - _RippleIntensity: 0.2
-    - _RippleSize: 10
-    - _RippleSpeed: 4
+    - _RippleSize: 1
+    - _RippleSpeed: -2
     - _RippleStartDistance: 2
     - _RippleTimes: 0
     - _SmoothnessTextureChannel: 0

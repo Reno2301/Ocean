@@ -190,6 +190,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wood (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6780649559643617192, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
+      propertyPath: m_TagString
+      value: Object
+      objectReference: {fileID: 0}
     - target: {fileID: 8511469972801037134, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_Mass
       value: 5
@@ -318,8 +322,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 120, y: 1, z: 120}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 120, y: 20, z: 120}
+  m_Center: {x: 0, y: -10, z: 0}
 --- !u!114 &607444917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +340,22 @@ MonoBehaviour:
   waveA: {x: 1, y: 0, z: 0.05, w: 16}
   waveB: {x: 1, y: 0.6, z: 0.1, w: 20}
   waveC: {x: 1, y: 1.3, z: 0.2, w: 12}
+  waveD: {x: -0.5, y: -0.2, z: 0.1, w: 10}
+  waveE: {x: 1, y: -0.5, z: 0.05, w: 10}
+  distanceX: 0
+  distanceZ: 0
+  rippleAmplitude:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  magnitudeDivider: 0.1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,6 +610,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wood
       objectReference: {fileID: 0}
+    - target: {fileID: 6780649559643617192, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
+      propertyPath: m_TagString
+      value: Object
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -662,6 +686,10 @@ PrefabInstance:
     - target: {fileID: 6780649559643617192, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_Name
       value: Wood (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6780649559643617192, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
+      propertyPath: m_TagString
+      value: Object
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
