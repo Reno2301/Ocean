@@ -5,11 +5,12 @@ public class Object : MonoBehaviour
 {
     private GameObject waterObject;
     private Material waterMaterial;
-    private WaveController waveController;
 
     private Vector4 waveA;
     private Vector4 waveB;
     private Vector4 waveC;
+    private Vector4 waveD;
+    private Vector4 waveE;
 
     public Transform[] floaters;
     public float underwaterDrag = 3f;
@@ -26,7 +27,6 @@ public class Object : MonoBehaviour
     void Start()
     {
         waterObject = GameObject.FindGameObjectWithTag("Water");
-        waveController = waterObject.GetComponent<WaveController>();
 
         // Get the material of the water object
         if (waterObject != null)
@@ -55,6 +55,8 @@ public class Object : MonoBehaviour
             waveA = waterMaterial.GetVector("_WaveA");
             waveB = waterMaterial.GetVector("_WaveB");
             waveC = waterMaterial.GetVector("_WaveC");
+            waveD = waterMaterial.GetVector("_WaveD");
+            waveE = waterMaterial.GetVector("_WaveE");
         }
     }
 
@@ -86,9 +88,11 @@ public class Object : MonoBehaviour
         Vector3 waveAHeight = GerstnerWave(waveA, position, time);
         Vector3 waveBHeight = GerstnerWave(waveB, position, time);
         Vector3 waveCHeight = GerstnerWave(waveC, position, time);
+        Vector3 waveDHeight = GerstnerWave(waveD, position, time);
+        Vector3 waveEHeight = GerstnerWave(waveE, position, time);
 
         // Sum the contributions from each wave for the final height.
-        return waveAHeight.y + waveBHeight.y + waveCHeight.y;
+        return waveAHeight.y + waveBHeight.y + waveCHeight.y + waveDHeight.y + waveEHeight.y;
     }
 
     void FixedUpdate()
@@ -107,7 +111,7 @@ public class Object : MonoBehaviour
             if (difference < 0)
             {
                 // Calculate the upward buoyancy force proportional to how far under water it is
-                Vector3 buoyancyForce = Vector3.up * floatingPower * Mathf.Abs(difference);
+                Vector3 buoyancyForce = Vector3.up * floatingPower;
                 rb.AddForceAtPosition(buoyancyForce, floaters[i].position, ForceMode.Force);
 
                 // Increment the number of floaters under water
@@ -141,24 +145,5 @@ public class Object : MonoBehaviour
             rb.drag = airDrag;
             rb.angularDrag = airAngularDrag;
         }
-    }
-
-
-
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject == waterObject)
-        {
-            // Optionally, you can fade the ripple smoothly
-            StartCoroutine(FadeRippleOut());
-        }
-    }
-
-    // Coroutine to fade out the ripple over time
-    private IEnumerator FadeRippleOut()
-    {
-        yield return new WaitForEndOfFrame();
-        //Fade out ripple
     }
 }

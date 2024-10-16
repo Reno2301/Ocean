@@ -103,10 +103,10 @@ Material:
     - _RippleAmplitude7: 0
     - _RippleAmplitude8: 0
     - _RippleAmplitude9: 0
-    - _RippleFrequency: 2
+    - _RippleFrequency: 1
     - _RippleIntensity: 0.2
-    - _RippleSize: 1
-    - _RippleSpeed: -2
+    - _RippleSize: 0.2
+    - _RippleSpeed: -0.1
     - _RippleStartDistance: 2
     - _RippleTimes: 0
     - _SmoothnessTextureChannel: 0
@@ -115,7 +115,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.38501248, g: 0.5495326, b: 0.7924528, a: 1}
+    - _Color: {r: 0.3647059, g: 0.6793784, b: 0.8117647, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Ripple0: {r: 0, g: 0, b: 5.09, a: 0.5}
     - _Ripple1: {r: 0, g: 0, b: 0, a: 0}
