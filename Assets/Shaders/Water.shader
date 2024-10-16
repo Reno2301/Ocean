@@ -14,10 +14,12 @@ Shader "Unlit/Water"
 			_WaveD("WaveD: Dir, Steepness, WaveLength", Vector) = (-1, 0, 0.1, 5)
 			_WaveE("WaveE: Dir, Steepness, WaveLength", Vector) = (-1, 1, 0.1, 5)
 
-			// Ripple effect properties
-			_RippleSize("Ripple Size", Float) = 1.0
-			_RippleSpeed("Ripple Speed", Float) = 1.0
-			_RippleFrequency("Ripple Frequency", Float) = 1.0
+			_RippleSize("Ripple Size", Range(5, 50)) = 10
+			_RippleFrequency("Ripple Frequency", Range(0.1, 10)) = 2.0
+			_RippleSpeed("Ripple Speed", Range(0.1, 5)) = 1.0
+			_RippleStartDistance("Ripple Start Distance", Range(0, 10)) = 1.0
+
+			_WaveHeight("Wave Height", Vector) = (0, 0, 0, 0)
 	}
 
 		SubShader
@@ -33,9 +35,18 @@ Shader "Unlit/Water"
 			half _Glossiness;
 			half _Metallic;
 			fixed4 _Color;
+			float4 _WaveHeight;
+
 
 			// Gerstner wave properties
 			float4 _WaveA, _WaveB, _WaveC, _WaveD, _WaveE;
+
+			// Ripple effect properties
+			float4 _Ripple0, _Ripple1, _Ripple2, _Ripple3, _Ripple4, _Ripple5, _Ripple6, _Ripple7, _Ripple8, _Ripple9;
+			float _RippleSize;
+			float _RippleFrequency;
+			float _RippleSpeed;
+			float _RippleStartDistance;
 
 			struct Input
 			{
@@ -75,6 +86,32 @@ Shader "Unlit/Water"
 				return displacement;
 			}
 
+			float3 RippleWave(float4 ripple, float3 p, inout float3 tangent, inout float3 binormal)
+			{
+				float distance = length(float2(p.x, p.z) - ripple.xy);
+				float timeSinceImpact = _Time.y - ripple.z;
+				float expandingRadius = timeSinceImpact * _RippleSpeed;
+
+				// Calculate the effective distance, adjusted by the start distance.
+				float effectiveDistance = max(0, distance - _RippleStartDistance);
+
+				// Apply the ripple if the effective distance is within the expanding radius
+				if (effectiveDistance <= expandingRadius)
+				{
+					float attenuation = max(0, 1 - (effectiveDistance / _RippleSize));
+					float rippleEffect = sin(effectiveDistance * (_RippleFrequency * 0.5f) - timeSinceImpact * 2.0f * UNITY_PI) * attenuation * ripple.w;
+
+					float3 displacement = float3(0, rippleEffect, 0);
+
+					tangent += float3(0, rippleEffect, 0);
+					binormal += float3(0, rippleEffect, 0);
+
+					return displacement;
+				}
+
+				return float3(0, 0, 0);
+			}
+
 			void vert(inout appdata_full vertexData)
 			{
 				float3 p = vertexData.vertex.xyz;
@@ -87,6 +124,18 @@ Shader "Unlit/Water"
 				p += GerstnerWave(_WaveC, p, tangent, binormal);
 				p += GerstnerWave(_WaveD, p, tangent, binormal);
 				p += GerstnerWave(_WaveE, p, tangent, binormal);
+
+				// Apply ripples
+				p += RippleWave(_Ripple0, p, tangent, binormal);
+				p += RippleWave(_Ripple1, p, tangent, binormal);
+				p += RippleWave(_Ripple2, p, tangent, binormal);
+				p += RippleWave(_Ripple3, p, tangent, binormal);
+				p += RippleWave(_Ripple4, p, tangent, binormal);
+				p += RippleWave(_Ripple5, p, tangent, binormal);
+				p += RippleWave(_Ripple6, p, tangent, binormal);
+				p += RippleWave(_Ripple7, p, tangent, binormal);
+				p += RippleWave(_Ripple8, p, tangent, binormal);
+				p += RippleWave(_Ripple9, p, tangent, binormal);
 
 				float3 normal = normalize(cross(binormal, tangent));
 

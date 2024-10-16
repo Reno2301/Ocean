@@ -194,6 +194,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6584438967769615559, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
+      propertyPath: rippleIntensity
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6780649559643617192, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_Name
       value: Wood (1)
@@ -204,7 +208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8511469972801037134, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_Mass
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -562,19 +566,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1656378250762033265, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.84180975
+      value: 0.9381796
       objectReference: {fileID: 0}
     - target: {fileID: 1656378250762033265, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.029048625
+      value: 0.07980221
       objectReference: {fileID: 0}
     - target: {fileID: 1656378250762033265, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.20967893
+      value: -0.19606297
       objectReference: {fileID: 0}
     - target: {fileID: 1656378250762033265, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.4965352
+      value: 0.27387932
       objectReference: {fileID: 0}
     - target: {fileID: 1656378250762033265, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -586,7 +590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1656378250762033265, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 58.48
+      value: 29.96
       objectReference: {fileID: 0}
     - target: {fileID: 3595909684633174132, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -599,6 +603,10 @@ PrefabInstance:
     - target: {fileID: 3769872166180415585, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584438967769615559, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
+      propertyPath: rippleIntensity
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6780649559643617192, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_Name
@@ -677,6 +685,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6584438967769615559, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
+      propertyPath: rippleIntensity
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6780649559643617192, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_Name
       value: Wood (2)
@@ -684,6 +696,10 @@ PrefabInstance:
     - target: {fileID: 6780649559643617192, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_TagString
       value: Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 8511469972801037134, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
+      propertyPath: m_Mass
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

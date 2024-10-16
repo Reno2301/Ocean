@@ -103,10 +103,10 @@ Material:
     - _RippleAmplitude7: 0
     - _RippleAmplitude8: 0
     - _RippleAmplitude9: 0
-    - _RippleFrequency: 1
+    - _RippleFrequency: 2
     - _RippleIntensity: 0.2
-    - _RippleSize: 0.2
-    - _RippleSpeed: -0.1
+    - _RippleSize: 15
+    - _RippleSpeed: 2
     - _RippleStartDistance: 2
     - _RippleTimes: 0
     - _SmoothnessTextureChannel: 0

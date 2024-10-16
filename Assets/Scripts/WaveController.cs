@@ -14,16 +14,24 @@ public class WaveController : MonoBehaviour
 
     private Material waterMaterial;
 
+    private List<Vector4> ripples = new List<Vector4>();
+
     void Start()
     {
         if (waterObject != null)
         {
             waterMaterial = waterObject.GetComponent<Renderer>().material;
         }
-        SetWaveParameters();
+        UpdateWavaParameters();
     }
 
-    void SetWaveParameters()
+    private void Update()
+    {
+        UpdateWavaParameters();
+        UpdateRipples();
+    }
+
+    void UpdateWavaParameters()
     {
         if (waterMaterial != null)
         {
@@ -35,11 +43,24 @@ public class WaveController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void UpdateRipples()
     {
-        if (other.CompareTag("Object"))
+        if (waterMaterial != null && ripples.Count > 0)
         {
-            //Add a ripple and display it on the water plane on the x and z position of the object
+            // Update ripple data in the shader (limited by a max number of ripples)
+            for (int i = 0; i < ripples.Count; i++)
+            {
+                waterMaterial.SetVector($"_Ripple{i}", ripples[i]);
+            }
         }
+    }
+
+    public void AddRipple(Vector3 position, float intensity)
+    {
+        // Store position and time of the ripple
+        ripples.Add(new Vector4(position.x, position.z, Time.time, intensity));
+
+        // Limit number of active ripples to prevent performance issues
+        if (ripples.Count > 10) ripples.RemoveAt(0);
     }
 }

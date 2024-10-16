@@ -222,7 +222,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6780649559643617192}
   serializedVersion: 4
-  m_Mass: 5
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -285,3 +285,4 @@ MonoBehaviour:
   airAngularDrag: 0.05
   floatingPower: 20
   floatersUnderWater: 0
+  rippleIntensity: 0

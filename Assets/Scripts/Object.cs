@@ -6,6 +6,8 @@ public class Object : MonoBehaviour
     private GameObject waterObject;
     private Material waterMaterial;
 
+    WaveController waveController;
+
     private Vector4 waveA;
     private Vector4 waveB;
     private Vector4 waveC;
@@ -24,6 +26,8 @@ public class Object : MonoBehaviour
     public int floatersUnderWater;
     bool underWater;
 
+    public float rippleIntensity;
+
     void Start()
     {
         waterObject = GameObject.FindGameObjectWithTag("Water");
@@ -32,6 +36,7 @@ public class Object : MonoBehaviour
         if (waterObject != null)
         {
             waterMaterial = waterObject.GetComponent<Renderer>().material;
+            waveController = waterObject.GetComponent<WaveController>();
         }
 
         // Get the Rigidbody component for falling and rotation
@@ -144,6 +149,14 @@ public class Object : MonoBehaviour
         {
             rb.drag = airDrag;
             rb.angularDrag = airAngularDrag;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == waterObject)
+        {
+            waveController.AddRipple(this.transform.position, rippleIntensity);
         }
     }
 }
