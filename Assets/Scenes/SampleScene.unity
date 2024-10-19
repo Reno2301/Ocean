@@ -195,6 +195,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6584438967769615559, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
+      propertyPath: floatingPower
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584438967769615559, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: rippleIntensity
       value: 0.2
       objectReference: {fileID: 0}
@@ -208,7 +212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8511469972801037134, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_Mass
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -605,6 +609,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6584438967769615559, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
+      propertyPath: floatingPower
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584438967769615559, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: rippleIntensity
       value: 0.2
       objectReference: {fileID: 0}
@@ -686,6 +694,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6584438967769615559, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
+      propertyPath: floatingPower
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584438967769615559, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: rippleIntensity
       value: 0.2
       objectReference: {fileID: 0}
@@ -699,7 +711,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8511469972801037134, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
       propertyPath: m_Mass
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

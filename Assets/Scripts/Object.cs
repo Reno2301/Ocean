@@ -1,12 +1,10 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Object : MonoBehaviour
 {
     private GameObject waterObject;
     private Material waterMaterial;
-
-    WaveController waveController;
 
     private Vector4 waveA;
     private Vector4 waveB;
@@ -14,29 +12,28 @@ public class Object : MonoBehaviour
     private Vector4 waveD;
     private Vector4 waveE;
 
-    public Transform[] floaters;
+    public Transform[] floaters; // Points where buoyancy is applied
     public float underwaterDrag = 3f;
     public float underwaterAngularDrag = 1f;
     public float airDrag = 0f;
     public float airAngularDrag = 0.05f;
-    public float floatingPower = 15f;
+    private float floatingPower;
 
     private Rigidbody rb;
 
     public int floatersUnderWater;
     bool underWater;
 
-    public float rippleIntensity;
-
     void Start()
     {
+        floatingPower = gameObject.GetComponent<Rigidbody>().mass * 5;
+
         waterObject = GameObject.FindGameObjectWithTag("Water");
 
         // Get the material of the water object
         if (waterObject != null)
         {
             waterMaterial = waterObject.GetComponent<Renderer>().material;
-            waveController = waterObject.GetComponent<WaveController>();
         }
 
         // Get the Rigidbody component for falling and rotation
@@ -52,7 +49,6 @@ public class Object : MonoBehaviour
         rb.useGravity = true;
     }
 
-    // Update the wave parameters from the shader
     void UpdateWaveParameters()
     {
         if (waterMaterial != null)
@@ -130,6 +126,7 @@ public class Object : MonoBehaviour
             }
         }
 
+        // Switch drag and angular drag depending on whether the object is underwater
         if (underWater && floatersUnderWater == 0)
         {
             underWater = false;
@@ -137,7 +134,7 @@ public class Object : MonoBehaviour
         }
     }
 
-    //use air or underwater drag and angulardrag
+    // Apply the appropriate drag depending on whether the object is underwater
     void SwitchState(bool isUnderwater)
     {
         if (isUnderwater)
@@ -154,9 +151,6 @@ public class Object : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == waterObject)
-        {
-            waveController.AddRipple(this.transform.position, rippleIntensity);
-        }
+        // When hitting the water, make a ripple/wave effect on the water surface.
     }
 }

@@ -14,8 +14,6 @@ public class WaveController : MonoBehaviour
 
     private Material waterMaterial;
 
-    private List<Vector4> ripples = new List<Vector4>();
-
     void Start()
     {
         if (waterObject != null)
@@ -28,7 +26,6 @@ public class WaveController : MonoBehaviour
     private void Update()
     {
         UpdateWavaParameters();
-        UpdateRipples();
     }
 
     void UpdateWavaParameters()
@@ -41,26 +38,5 @@ public class WaveController : MonoBehaviour
             waterMaterial.SetVector("_WaveD", waveD);
             waterMaterial.SetVector("_WaveE", waveE);
         }
-    }
-
-    void UpdateRipples()
-    {
-        if (waterMaterial != null && ripples.Count > 0)
-        {
-            // Update ripple data in the shader (limited by a max number of ripples)
-            for (int i = 0; i < ripples.Count; i++)
-            {
-                waterMaterial.SetVector($"_Ripple{i}", ripples[i]);
-            }
-        }
-    }
-
-    public void AddRipple(Vector3 position, float intensity)
-    {
-        // Store position and time of the ripple
-        ripples.Add(new Vector4(position.x, position.z, Time.time, intensity));
-
-        // Limit number of active ripples to prevent performance issues
-        if (ripples.Count > 10) ripples.RemoveAt(0);
     }
 }
