@@ -69,7 +69,6 @@ public class WaveController : MonoBehaviour
             waterMaterial.SetVector("_WaveC", waveC);
             waterMaterial.SetVector("_WaveD", waveD);
             waterMaterial.SetVector("_WaveE", waveE);
-            waterMaterial.SetInt("_RippleCount", rippleCount);
         }
     }
 
@@ -109,7 +108,6 @@ public class WaveController : MonoBehaviour
         }
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Object"))
@@ -117,7 +115,8 @@ public class WaveController : MonoBehaviour
             if (!objects.Contains(other.gameObject))
             {
                 objects.Add(other.gameObject);
-                rippleCount = objects.Count;
+                rippleCount += 1;
+                waterMaterial.SetInt("_RippleCount", rippleCount);
                 parametersChanged = true;  // Mark parameters as changed
             }
         }
@@ -129,7 +128,8 @@ public class WaveController : MonoBehaviour
         {
             if (objects.Remove(other.gameObject))  // Remove and return true if successfully removed
             {
-                rippleCount = objects.Count;
+                rippleCount -= 1;
+                waterMaterial.SetInt("_RippleCount", rippleCount);
                 parametersChanged = true;  // Mark parameters as changed
             }
         }

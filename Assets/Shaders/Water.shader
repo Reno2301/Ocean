@@ -131,7 +131,7 @@ Shader "Unlit/Water"
 					float rippleEffect = 0.0;
 					float time = _TimeOffset + _Time.y;
 
-					for (int i = 0; i < _RippleCount - 1; i++)
+					for (int i = 0; i < _RippleCount; i++)
 					{
 						float3 objPos = _ObjectPositions[i].xyz;
 						rippleEffect += CalculateRippleEffect(p, objPos, time);
