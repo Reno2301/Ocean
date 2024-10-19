@@ -148,9 +148,4 @@ public class Object : MonoBehaviour
             rb.angularDrag = airAngularDrag;
         }
     }
-
-    void OnTriggerEnter(Collider other)
-    {
-        // When hitting the water, make a ripple/wave effect on the water surface.
-    }
 }

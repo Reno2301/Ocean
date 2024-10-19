@@ -74,12 +74,14 @@ Material:
     - _ImpactRadius: 3
     - _ImpactTime: 2
     - _ImpactTimes: 1
+    - _Integer: 5
     - _MassInfluence: 1
     - _MassInfluences: 3
     - _MaxRipples: 10
     - _Metallic: 0
     - _Mode: 0
     - _NumWaves: 3
+    - _ObjectRadius: 0.5
     - _OcclusionStrength: 1
     - _OffsetX0: 0
     - _OffsetX1: 0
@@ -102,6 +104,7 @@ Material:
     - _OffsetZ8: 0
     - _OffsetZ9: 0
     - _Parallax: 0.02
+    - _RippleAmplitude: 0.5
     - _RippleAmplitude0: 0
     - _RippleAmplitude1: 0
     - _RippleAmplitude2: 0
@@ -112,15 +115,20 @@ Material:
     - _RippleAmplitude7: 0
     - _RippleAmplitude8: 0
     - _RippleAmplitude9: 0
-    - _RippleFrequency: 2
-    - _RippleIntensity: 0.2
-    - _RippleSize: 15
-    - _RippleSpeed: 2
+    - _RippleCount: 0
+    - _RippleDecay: 0.1
+    - _RippleFrequency: 1
+    - _RippleIntensity: 1
+    - _RippleMaxDistance: 10
+    - _RippleSize: 0.1
+    - _RippleSpeed: 1
     - _RippleStartDistance: 2
     - _RippleTimes: 0
+    - _RippleWaveLength: 0.1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _TimeOffset: 0
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
@@ -128,7 +136,18 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _ImpactPoint: {r: 0, g: 0, b: 0, a: 0}
     - _ImpactPoints: {r: 0, g: 0, b: 0, a: 0}
-    - _Ripple0: {r: 0, g: 0, b: 5.09, a: 0.5}
+    - _ObjectPosition0: {r: 0, g: 0, b: 0, a: 0}
+    - _ObjectPosition1: {r: 0, g: 0, b: 0, a: 0}
+    - _ObjectPosition2: {r: 0, g: 0, b: 0, a: 0}
+    - _ObjectPosition3: {r: 0, g: 0, b: 0, a: 0}
+    - _ObjectPosition4: {r: 0, g: 0, b: 0, a: 0}
+    - _ObjectPosition5: {r: 0, g: 0, b: 0, a: 0}
+    - _ObjectPosition6: {r: 0, g: 0, b: 0, a: 0}
+    - _ObjectPosition7: {r: 0, g: 0, b: 0, a: 0}
+    - _ObjectPosition8: {r: 0, g: 0, b: 0, a: 0}
+    - _ObjectPosition9: {r: 0, g: 0, b: 0, a: 0}
+    - _ObjectPositions: {r: 0, g: 0, b: 0, a: 0}
+    - _Ripple0: {r: 0, g: 0, b: 0, a: 0}
     - _Ripple1: {r: 0, g: 0, b: 0, a: 0}
     - _Ripple2: {r: 0, g: 0, b: 0, a: 0}
     - _Ripple3: {r: 0, g: 0, b: 0, a: 0}
