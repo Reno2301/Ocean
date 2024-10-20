@@ -22,6 +22,11 @@ Shader "Unlit/Water"
 			_RippleMaxDistance("Ripple Max Distance", float) = 10.0
 			_TimeOffset("Time Offset", float) = 0.0
 			_RippleCount("Ripple Count", int) = 0
+
+			// New property for color change based on height
+			_HeightThreshold("Height Threshold", float) = 1.0
+			_TransitionRange("Transition Range", float) = 0.5 // How gradual the transition should be
+			_HighWaterColor("High Water Color", Color) = (0.8, 0.9, 1, 1)
 	}
 
 		SubShader
@@ -50,6 +55,12 @@ Shader "Unlit/Water"
 			float _RippleAmplitude;
 			float _RippleMaxDistance;
 			float _TimeOffset;
+
+			// New properties for color change based on height
+			float _HeightThreshold;
+			float _TransitionRange;
+			fixed4 _HighWaterColor;
+
 
 			struct Input
 			{
@@ -147,6 +158,13 @@ Shader "Unlit/Water"
 			void surf(Input IN, inout SurfaceOutputStandard o)
 			{
 				fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+
+				// Gradually transition to the high water color based on height
+				float heightFactor = smoothstep(_HeightThreshold, _HeightThreshold + _TransitionRange, IN.worldPos.y);
+
+				// Blend the base color with the high water color using the height factor
+				c.rgb = lerp(c.rgb, _HighWaterColor.rgb, heightFactor);
+
 
 				o.Albedo = c.rgb;
 				o.Metallic = _Metallic;

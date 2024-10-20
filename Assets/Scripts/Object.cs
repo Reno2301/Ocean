@@ -26,7 +26,7 @@ public class Object : MonoBehaviour
 
     void Start()
     {
-        floatingPower = gameObject.GetComponent<Rigidbody>().mass * 5;
+        floatingPower = gameObject.GetComponent<Rigidbody>().mass * 7;
 
         waterObject = GameObject.FindGameObjectWithTag("Water");
 

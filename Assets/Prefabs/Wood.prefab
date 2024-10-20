@@ -284,6 +284,3 @@ MonoBehaviour:
   airDrag: 0
   airAngularDrag: 0.05
   floatersUnderWater: 0
-  rippleWaveLength: 0
-  rippleFrequency: 0
-  rippleDecay: 0
