@@ -20,6 +20,10 @@ public class WaveController : MonoBehaviour
     public float rippleMaxDistance;
     public int rippleCount;
 
+    public float heightThreshold = 0.2f;
+    public float transitionRange = 1f;
+    public Color highWaterColor = new(0.8f, 0.9f, 1, 1);
+
     private Material waterMaterial;
     private bool parametersChanged = false;  // Track when parameters change
 
@@ -69,6 +73,9 @@ public class WaveController : MonoBehaviour
             waterMaterial.SetVector("_WaveC", waveC);
             waterMaterial.SetVector("_WaveD", waveD);
             waterMaterial.SetVector("_WaveE", waveE);
+            waterMaterial.SetFloat("_HeightThreshold", heightThreshold);
+            waterMaterial.SetFloat("_TransitionRange", transitionRange);
+            waterMaterial.SetColor("_HighWaterColor", highWaterColor);
         }
     }
 
