@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class WaveController : MonoBehaviour
 {
@@ -27,6 +28,12 @@ public class WaveController : MonoBehaviour
     private Material waterMaterial;
     private bool parametersChanged = false;  // Track when parameters change
 
+    // Splash particle effect
+    public GameObject splashPrefab;
+    private Queue<GameObject> splashPool = new Queue<GameObject>();  // Pool for splash effects
+    public int splashPoolSize = 5;  // Pool size
+    public float splashDuration = 1.0f;  // Time the splash should be visible
+
     void Start()
     {
         if (waterObject != null)
@@ -36,6 +43,14 @@ public class WaveController : MonoBehaviour
             // Initialize ripple and wave parameters
             SetRippleParameters();
             SetWaveParameters();
+        }
+
+        // Initialize splash pool
+        for (int i = 0; i < splashPoolSize; i++)
+        {
+            GameObject splash = Instantiate(splashPrefab);
+            splash.SetActive(false);  // Initially, all splashes are inactive
+            splashPool.Enqueue(splash);  // Add them to the pool
         }
     }
 
@@ -125,6 +140,10 @@ public class WaveController : MonoBehaviour
                 rippleCount += 1;
                 waterMaterial.SetInt("_RippleCount", rippleCount);
                 parametersChanged = true;  // Mark parameters as changed
+
+                // Trigger splash effect at the point of impact
+                TriggerSplash(other.transform.position);
+
             }
         }
     }
@@ -140,5 +159,36 @@ public class WaveController : MonoBehaviour
                 parametersChanged = true;  // Mark parameters as changed
             }
         }
+    }
+
+    void TriggerSplash(Vector3 position)
+    {
+        // Get a splash from the pool
+        GameObject splash = GetSplashFromPool();
+        splash.transform.position = position;
+        splash.SetActive(true);
+
+        // Deactivate splash after a short duration
+        StartCoroutine(DeactivateSplash(splash, splashDuration));
+    }
+
+    GameObject GetSplashFromPool()
+    {
+        if (splashPool.Count > 0)
+        {
+            return splashPool.Dequeue();
+        }
+        else
+        {
+            // If the pool is empty, create a new splash
+            return Instantiate(splashPrefab);
+        }
+    }
+
+    IEnumerator DeactivateSplash(GameObject splash, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        splash.SetActive(false);  // Hide the splash
+        splashPool.Enqueue(splash);  // Return it to the pool
     }
 }
