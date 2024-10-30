@@ -11,11 +11,11 @@ float waveDispersionFactor;
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
 	//// Check if the current pixel is at the border
-	//if (id.x == 0 || id.y == 0 || id.x == gridResolution.x - 1 || id.y == gridResolution.y - 1)
-	//{
-	//	NextWaveState[id.xy] = float4(0, 0, 0, 1);
-	//	return;
-	//}
+	if (id.x == 0 || id.y == 0 || id.x == gridResolution.x - 1 || id.y == gridResolution.y - 1)
+	{
+		NextWaveState[id.xy] = float4(0, 0, 0, 1);
+		return;
+	}
 
 	float centerWaveHeight = CurrentWaveState[id.xy].x;
 	float prevCenterWaveHeight = PreviousWaveState[id.xy].x;

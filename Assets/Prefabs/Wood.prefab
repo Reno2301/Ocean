@@ -275,6 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3aea5859a2636c45b5c5e794e0f6334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterMaterial: {fileID: 2100000, guid: cf0bac0391c0fcf459088613087ed3ee, type: 2}
   floaters:
   - {fileID: 3595909684633174132}
   - {fileID: 929563854545218230}

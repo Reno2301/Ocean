@@ -21,7 +21,7 @@ Shader "Unlit/Water"
 
 			// Ripple parameters
 			_RippleHeightTex("Ripple Height Texture", 2D) = "white" {}
-			_RippleAmplitude("Wave Amplitude", Float) = 0.8
+			_RippleAmplitude("Ripple Amplitude", Float) = 0.8
 	}
 
 		SubShader
@@ -104,7 +104,7 @@ Shader "Unlit/Water"
 
 				// Sample the ripple height texture for additional displacement on top of Gerstner waves
 				float waveHeight = tex2Dlod(_RippleHeightTex, float4(vertexData.texcoord.xy, 0, 0)).r;
-				float displacement = waveHeight * _RippleAmplitude;
+				float displacement = waveHeight * _RippleAmplitude * 10;
 
 				// Offset vertex y-position by the ripple height
 				p.y += displacement;

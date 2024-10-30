@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 
 public class WaveController : MonoBehaviour
 {
+    public RawImage debugImage;
+
     [Header("References")]
-    public GameObject waterObject;
+    private GameObject waterObject;
     public List<GameObject> objects = new();  // Objects in the water
     private readonly Vector4[] objectPositions = new Vector4[10];  // Max 10 positions for now
 
@@ -50,6 +53,8 @@ public class WaveController : MonoBehaviour
         Debug.Log("Grid Resolution X: " + gridResolution.x + ", Grid Resolution Y: " + gridResolution.y);
         waterMaterial.mainTexture = CurrentWaveState;
 
+        waterObject = gameObject;
+
         if (waterObject != null)
         {
             // Initialize wave parameters
@@ -84,6 +89,8 @@ public class WaveController : MonoBehaviour
         UpdateObjectPositions();
 
         UpdateRippleEffect();
+
+        debugImage.texture = NextWaveState;
     }
 
     void UpdateRippleEffect()

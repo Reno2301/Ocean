@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 public class Object : MonoBehaviour
 {
-    private GameObject waterObject;
-    private Material waterMaterial;
+    public Material waterMaterial;
 
     private Vector4 waveA;
     private Vector4 waveB;
@@ -27,14 +26,6 @@ public class Object : MonoBehaviour
     void Start()
     {
         floatingPower = gameObject.GetComponent<Rigidbody>().mass * 7;
-
-        waterObject = GameObject.FindGameObjectWithTag("Water");
-
-        // Get the material of the water object
-        if (waterObject != null)
-        {
-            waterMaterial = waterObject.GetComponent<Renderer>().material;
-        }
 
         // Get the Rigidbody component for falling and rotation
         rb = GetComponent<Rigidbody>();
