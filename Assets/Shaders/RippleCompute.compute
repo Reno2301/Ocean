@@ -1,0 +1,42 @@
+#pragma kernel CSMain
+
+RWTexture2D<float4> CurrentWaveState;
+RWTexture2D<float4> PreviousWaveState;
+RWTexture2D<float4> NextWaveState;
+RWTexture2D<float4> ObstacleMap;
+int2 gridResolution;
+float waveDispersionFactor;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	//// Check if the current pixel is at the border
+	//if (id.x == 0 || id.y == 0 || id.x == gridResolution.x - 1 || id.y == gridResolution.y - 1)
+	//{
+	//	NextWaveState[id.xy] = float4(0, 0, 0, 1);
+	//	return;
+	//}
+
+	float centerWaveHeight = CurrentWaveState[id.xy].x;
+	float prevCenterWaveHeight = PreviousWaveState[id.xy].x;
+	float rightNeighborWaveHeight = CurrentWaveState[id.xy + uint2(1, 0)].x;
+	float topNeighborWaveHeight = CurrentWaveState[id.xy + uint2(0, 1)].x;
+	float leftNeighborWaveHeight = CurrentWaveState[id.xy - uint2(1, 0)].x;
+	float bottomNeighborWaveHeight = CurrentWaveState[id.xy - uint2(0, 1)].x;
+
+	// Wave propagation calculation
+	float newWaveHeight = centerWaveHeight * 2 - prevCenterWaveHeight
+		+ 0.25 * (rightNeighborWaveHeight + leftNeighborWaveHeight
+			+ topNeighborWaveHeight + bottomNeighborWaveHeight
+			- 4 * centerWaveHeight);
+	newWaveHeight *= waveDispersionFactor;
+
+	// Obstacle handling
+	if (ObstacleMap[id.xy].x > 0.5)
+	{
+		newWaveHeight = -0.8;
+	}
+
+	// Write the new wave height to NextWaveState (for vertex displacement)
+	NextWaveState[id.xy] = float4(newWaveHeight, newWaveHeight, newWaveHeight, 1);
+}

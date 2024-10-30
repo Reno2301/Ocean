@@ -4,44 +4,55 @@ using System.Collections;
 
 public class WaveController : MonoBehaviour
 {
+    [Header("References")]
     public GameObject waterObject;
     public List<GameObject> objects = new();  // Objects in the water
     private readonly Vector4[] objectPositions = new Vector4[10];  // Max 10 positions for now
 
+    [Header("Waves parameters")]
     public Vector4 waveA;
     public Vector4 waveB;
     public Vector4 waveC;
     public Vector4 waveD;
     public Vector4 waveE;
 
-    public float rippleWaveLength;
-    public float rippleFrequency;
-    public float rippleDecay;
-    public float rippleAmplitude;
-    public float rippleMaxDistance;
-    public int rippleCount;
-
     public float heightThreshold = 0.2f;
     public float transitionRange = 1f;
     public Color highWaterColor = new(0.8f, 0.9f, 1, 1);
 
-    private Material waterMaterial;
+    public Material waterMaterial;
     private bool parametersChanged = false;  // Track when parameters change
 
     // Splash particle effect
+    [Header("Splash Effect")]
     public GameObject splashPrefab;
     private Queue<GameObject> splashPool = new Queue<GameObject>();  // Pool for splash effects
     public int splashPoolSize = 5;  // Pool size
     public float splashDuration = 1.0f;  // Time the splash should be visible
 
+    // Ripple effect
+    [Header("Ripple Effect")]
+    public ComputeShader rippleCompute;
+    public RenderTexture CurrentWaveState, PreviousWaveState, NextWaveState;
+    public Vector2Int gridResolution;
+    public RenderTexture ObstacleMap;
+    public float rippleDispersionFactor = 0.98f;
+    public float rippleAmplitude = 0.8f;
+
     void Start()
     {
+        InitializeTexture(ref CurrentWaveState);
+        InitializeTexture(ref PreviousWaveState);
+        InitializeTexture(ref NextWaveState);
+        ObstacleMap.enableRandomWrite = true;
+        Debug.Assert(ObstacleMap.width == gridResolution.x && ObstacleMap.height == gridResolution.y);
+        Debug.Log("Map Width: " + ObstacleMap.width + ", map Height: " + ObstacleMap.height);
+        Debug.Log("Grid Resolution X: " + gridResolution.x + ", Grid Resolution Y: " + gridResolution.y);
+        waterMaterial.mainTexture = CurrentWaveState;
+
         if (waterObject != null)
         {
-            waterMaterial = waterObject.GetComponent<Renderer>().material;
-
-            // Initialize ripple and wave parameters
-            SetRippleParameters();
+            // Initialize wave parameters
             SetWaveParameters();
         }
 
@@ -54,29 +65,48 @@ public class WaveController : MonoBehaviour
         }
     }
 
+    void InitializeTexture(ref RenderTexture tex)
+    {
+        tex = new RenderTexture(gridResolution.x, gridResolution.y, 1, UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16B16A16_SNorm);
+        tex.enableRandomWrite = true;
+        tex.Create();
+    }
+
     private void Update()
     {
         if (parametersChanged)  // Only update if parameters have changed
         {
-            SetRippleParameters();
             SetWaveParameters();
             parametersChanged = false;  // Reset change flag
         }
 
         // Update object positions in the water (for ripples) if objects have moved
         UpdateObjectPositions();
+
+        UpdateRippleEffect();
     }
 
-    void SetRippleParameters()
+    void UpdateRippleEffect()
     {
-        if (waterMaterial != null)
-        {
-            waterMaterial.SetFloat("_RippleWaveLength", rippleWaveLength);
-            waterMaterial.SetFloat("_RippleFrequency", rippleFrequency);
-            waterMaterial.SetFloat("_RippleDecay", rippleDecay);
-            waterMaterial.SetFloat("_RippleAmplitude", rippleAmplitude);
-            waterMaterial.SetFloat("_RippleMaxDistance", rippleMaxDistance);
-        }
+        // Swap textures for time steps
+        Graphics.CopyTexture(CurrentWaveState, PreviousWaveState);
+        Graphics.CopyTexture(NextWaveState, CurrentWaveState);
+
+        // Set compute shader parameters
+        rippleCompute.SetTexture(0, "CurrentWaveState", CurrentWaveState);
+        rippleCompute.SetTexture(0, "PreviousWaveState", PreviousWaveState);
+        rippleCompute.SetTexture(0, "NextWaveState", NextWaveState);
+        rippleCompute.SetTexture(0, "ObstacleMap", ObstacleMap);
+
+        rippleCompute.SetVector("gridResolution", new Vector2(gridResolution.x, gridResolution.y));
+        rippleCompute.SetFloat("waveDispersionFactor", rippleDispersionFactor);
+
+        // Dispatch the compute shader
+        rippleCompute.Dispatch(0, gridResolution.x / 8, gridResolution.y / 8, 1);
+
+        // Set the displacement texture on the water material for vertex displacement
+        waterMaterial.SetTexture("_RippleHeightTex", NextWaveState);
+        waterMaterial.SetFloat("_RippleAmplitude", rippleAmplitude); // Adjust amplitude as needed
     }
 
     void SetWaveParameters()
@@ -137,26 +167,11 @@ public class WaveController : MonoBehaviour
             if (!objects.Contains(other.gameObject))
             {
                 objects.Add(other.gameObject);
-                rippleCount += 1;
-                waterMaterial.SetInt("_RippleCount", rippleCount);
                 parametersChanged = true;  // Mark parameters as changed
 
                 // Trigger splash effect at the point of impact
                 TriggerSplash(other.transform.position);
 
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Object"))
-        {
-            if (objects.Remove(other.gameObject))  // Remove and return true if successfully removed
-            {
-                rippleCount -= 1;
-                waterMaterial.SetInt("_RippleCount", rippleCount);
-                parametersChanged = true;  // Mark parameters as changed
             }
         }
     }

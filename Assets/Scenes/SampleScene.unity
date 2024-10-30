@@ -179,6 +179,89 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
+--- !u!1 &164886887
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 164886888}
+  - component: {fileID: 164886890}
+  m_Layer: 0
+  m_Name: ObstacleCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &164886888
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164886887}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 607444914}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!20 &164886890
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164886887}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 50
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 8400000, guid: bc1df560869ee6448bfa55b8b6f04ffa, type: 2}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1001 &590867853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -247,7 +330,6 @@ GameObject:
   - component: {fileID: 607444914}
   - component: {fileID: 607444913}
   - component: {fileID: 607444915}
-  - component: {fileID: 607444912}
   - component: {fileID: 607444916}
   - component: {fileID: 607444917}
   m_Layer: 0
@@ -257,20 +339,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &607444912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 607444911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f7c7f4c2a8bb934091be4cb4fed322a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Size: 120
-  Scale: 1
 --- !u!33 &607444913
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -278,7 +346,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 607444911}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: 3be9c8d549c7e4907a8eeb6a5476a60f, type: 2}
 --- !u!4 &607444914
 Transform:
   m_ObjectHideFlags: 0
@@ -291,7 +359,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 164886888}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &607444915
@@ -371,23 +440,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterObject: {fileID: 607444911}
   objects: []
-  waveA: {x: 1, y: 1, z: 0.2, w: 15}
-  waveB: {x: 1.2, y: 0.8, z: 0.15, w: 20}
-  waveC: {x: 1.4, y: 0.7, z: 0.12, w: 15}
-  waveD: {x: 1.5, y: 0.6, z: 0.1, w: 10}
-  waveE: {x: 1.6, y: 0.5, z: 0.12, w: 18}
-  rippleWaveLength: 6
-  rippleFrequency: 1.5
-  rippleDecay: 0.05
-  rippleAmplitude: 1.2
-  rippleMaxDistance: 20
-  rippleCount: 0
-  heightThreshold: 0.2
+  waveA: {x: 1, y: 0.8, z: 0.1, w: 10}
+  waveB: {x: 1, y: 1.3, z: 0.15, w: 15}
+  waveC: {x: 1, y: 1.8, z: 0.1, w: 10}
+  waveD: {x: 1, y: 0.3, z: 0.2, w: 10}
+  waveE: {x: 1, y: 1, z: 0.1, w: 15}
+  heightThreshold: 0
   transitionRange: 1
-  highWaterColor: {r: 0.7490196, g: 0.8862745, b: 1, a: 0}
+  highWaterColor: {r: 0.7490196, g: 0.8862745, b: 1, a: 1}
+  waterMaterial: {fileID: 2100000, guid: cf0bac0391c0fcf459088613087ed3ee, type: 2}
   splashPrefab: {fileID: 3640793701984294370, guid: 620a176e327e8a446aff80352df5c12a, type: 3}
   splashPoolSize: 5
   splashDuration: 1
+  rippleCompute: {fileID: 7200000, guid: 53ab7fc558684c74388d05e420e072ed, type: 3}
+  CurrentWaveState: {fileID: 0}
+  PreviousWaveState: {fileID: 0}
+  NextWaveState: {fileID: 0}
+  gridResolution: {x: 1024, y: 1024}
+  ObstacleMap: {fileID: 8400000, guid: bc1df560869ee6448bfa55b8b6f04ffa, type: 2}
+  rippleDispersionFactor: 0.98
+  rippleAmplitude: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,7 +673,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 10
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
