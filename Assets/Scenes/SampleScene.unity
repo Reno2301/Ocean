@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 607444917}
   m_Layer: 0
   m_Name: Water
-  m_TagString: Untagged
+  m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -459,7 +459,7 @@ MonoBehaviour:
   gridResolution: {x: 2048, y: 2048}
   ObstacleMap: {fileID: 8400000, guid: bc1df560869ee6448bfa55b8b6f04ffa, type: 2}
   rippleDispersionFactor: 0.98
-  rippleAmplitude: 0.1
+  rippleAmplitude: 0.05
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,6 +1344,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc1fa22a3296bd84b93ffdd8d17e77d1, type: 3}
+--- !u!1001 &5937556888635069443
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1316766574884696638, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316766574884696638, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316766574884696638, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -37.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316766574884696638, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316766574884696638, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316766574884696638, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316766574884696638, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316766574884696638, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316766574884696638, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316766574884696638, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5690694715520173305, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1363,3 +1420,4 @@ SceneRoots:
   - {fileID: 1153169879}
   - {fileID: 1739229825}
   - {fileID: 1127043607}
+  - {fileID: 5937556888635069443}

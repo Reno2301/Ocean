@@ -23,8 +23,12 @@ public class Object : MonoBehaviour
     public int floatersUnderWater;
     bool underWater;
 
+    private SpriteRenderer spriteRenderer;
+
     void Start()
     {
+        spriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
+
         floatingPower = gameObject.GetComponent<Rigidbody>().mass * 7;
 
         // Get the Rigidbody component for falling and rotation
@@ -122,6 +126,22 @@ public class Object : MonoBehaviour
         {
             underWater = false;
             SwitchState(false);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.name == "Water")
+        {
+            spriteRenderer.enabled = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "Water")
+        {
+            spriteRenderer.enabled = false;
         }
     }
 
