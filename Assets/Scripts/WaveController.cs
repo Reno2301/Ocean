@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class WaveController : MonoBehaviour
 {
-    public RawImage debugImage;
-
     [Header("References")]
     private GameObject waterObject;
     public List<GameObject> objects = new();  // Objects in the water
@@ -74,6 +72,7 @@ public class WaveController : MonoBehaviour
     {
         tex = new RenderTexture(gridResolution.x, gridResolution.y, 1, UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16B16A16_SNorm);
         tex.enableRandomWrite = true;
+        tex.filterMode = FilterMode.Bilinear; // Enable bilinear filtering
         tex.Create();
     }
 
@@ -89,8 +88,6 @@ public class WaveController : MonoBehaviour
         UpdateObjectPositions();
 
         UpdateRippleEffect();
-
-        debugImage.texture = NextWaveState;
     }
 
     void UpdateRippleEffect()

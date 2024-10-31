@@ -92,39 +92,46 @@ Shader "Unlit/Water"
 			void vert(inout appdata_full vertexData)
 			{
 				float3 p = vertexData.vertex.xyz;
+
+				// Set up tangent and binormal vectors for Gerstner wave normal calculation
 				float3 tangent = float3(1, 0, 0);
 				float3 binormal = float3(0, 0, 1);
 
-				// Apply Gerstner waves as the base displacement
+				// Apply Gerstner wave displacement and track tangent/binormal for normal calculation
 				p += GerstnerWave(_WaveA, p, tangent, binormal);
 				p += GerstnerWave(_WaveB, p, tangent, binormal);
 				p += GerstnerWave(_WaveC, p, tangent, binormal);
 				p += GerstnerWave(_WaveD, p, tangent, binormal);
 				p += GerstnerWave(_WaveE, p, tangent, binormal);
 
-				// Sample the ripple height texture for additional displacement on top of Gerstner waves
-				float waveHeight = tex2Dlod(_RippleHeightTex, float4(vertexData.texcoord.xy, 0, 0)).r;
-				float displacement = waveHeight * _RippleAmplitude * 10;
+				// Calculate the normal from the Gerstner waves
+				float3 gerstnerNormal = normalize(cross(binormal, tangent));
 
-				// Offset vertex y-position by the ripple height
+				// Sample the ripple height texture for additional displacement
+				float waveHeight = tex2Dlod(_RippleHeightTex, float4(vertexData.texcoord.xy, 0, 0)).r;
+				float displacement = waveHeight * _RippleAmplitude;
+
+				// Apply the ripple effect to the y position
 				p.y += displacement;
 
-				// Calculate normal by sampling neighboring heights in the ripple texture
+				// Calculate ripple normal by sampling neighboring heights in _RippleHeightTex
 				float waveHeightRight = tex2Dlod(_RippleHeightTex, float4(vertexData.texcoord.xy + float2(0.01, 0), 0, 0)).r * _RippleAmplitude;
 				float waveHeightUp = tex2Dlod(_RippleHeightTex, float4(vertexData.texcoord.xy + float2(0, 0.01), 0, 0)).r * _RippleAmplitude;
 
-				// Calculate tangent vectors based on ripple displacement for accurate normals
-				float3 tangentX = float3(1, waveHeightRight - displacement, 0);
-				float3 tangentZ = float3(0, waveHeightUp - displacement, 1);
+				// Calculate tangent vectors based on ripple displacement for ripple normals
+				float3 rippleTangentX = float3(1, waveHeightRight - displacement, 0);
+				float3 rippleTangentZ = float3(0, waveHeightUp - displacement, 1);
 
-				// Calculate the normal based on the combined displacement
-				float3 normal = normalize(cross(binormal + tangentZ, tangent + tangentX));
+				// Calculate the normal based on the ripple displacement
+				float3 rippleNormal = normalize(cross(rippleTangentZ, rippleTangentX));
+
+				// Combine Gerstner and Ripple normals for final result
+				float3 combinedNormal = normalize(gerstnerNormal + rippleNormal);
 
 				// Apply the final position and normal to the vertex
 				vertexData.vertex.xyz = p;
-				vertexData.normal = normal;
+				vertexData.normal = combinedNormal;
 			}
-
 
 			void surf(Input IN, inout SurfaceOutputStandard o)
 			{
