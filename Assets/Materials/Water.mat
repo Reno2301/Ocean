@@ -114,7 +114,7 @@ Material:
     - _OffsetZ8: 0
     - _OffsetZ9: 0
     - _Parallax: 0.02
-    - _RippleAmplitude: 0.05
+    - _RippleAmplitude: 0.2
     - _RippleAmplitude0: 0
     - _RippleAmplitude1: 0
     - _RippleAmplitude2: 0
@@ -172,10 +172,10 @@ Material:
     - _RippleCenter: {r: 0, g: 0, b: 0, a: 0}
     - _RippleCenters: {r: 0, g: 0, b: 0, a: 0}
     - _RippleTimes: {r: 0, g: 0, b: 0, a: 0}
-    - _WaveA: {r: 1, g: 0.8, b: 0.1, a: 10}
-    - _WaveB: {r: 1, g: 1.3, b: 0.15, a: 15}
-    - _WaveC: {r: 1, g: 1.8, b: 0.1, a: 10}
-    - _WaveD: {r: 1, g: 0.3, b: 0.2, a: 10}
-    - _WaveE: {r: 1, g: 1, b: 0.1, a: 15}
+    - _WaveA: {r: 1, g: 0.8, b: 0.05, a: 12}
+    - _WaveB: {r: 1, g: 1.3, b: 0.1, a: 15}
+    - _WaveC: {r: 1, g: 1.8, b: 0.05, a: 16}
+    - _WaveD: {r: 1, g: 0.3, b: 0.1, a: 13}
+    - _WaveE: {r: 1, g: 1, b: 0.05, a: 15}
     - _WaveHeight: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -10,13 +10,6 @@ float waveDispersionFactor;
 [numthreads(8, 8, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
-	//// Check if the current pixel is at the border
-	if (id.x == 0 || id.y == 0 || id.x == gridResolution.x - 1 || id.y == gridResolution.y - 1)
-	{
-		NextWaveState[id.xy] = float4(0, 0, 0, 1);
-		return;
-	}
-
 	float centerWaveHeight = CurrentWaveState[id.xy].x;
 	float prevCenterWaveHeight = PreviousWaveState[id.xy].x;
 	float rightNeighborWaveHeight = CurrentWaveState[id.xy + uint2(1, 0)].x;
@@ -31,10 +24,13 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 			- 4 * centerWaveHeight);
 	newWaveHeight *= waveDispersionFactor;
 
-	// Obstacle handling
-	if (ObstacleMap[id.xy].x > 0.5)
+	if (ObstacleMap[id.xy].x == 1)
 	{
-		newWaveHeight = -0.8;
+		newWaveHeight = -1;
+	}
+
+	if (ObstacleMap[id.xy].y == 1) {
+		newWaveHeight = -1;
 	}
 
 	// Write the new wave height to NextWaveState (for vertex displacement)
