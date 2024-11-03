@@ -8,7 +8,6 @@ public class WaveController : MonoBehaviour
     [Header("References")]
     private GameObject waterObject;
     public List<GameObject> objects = new();  // Objects in the water
-    private readonly Vector4[] objectPositions = new Vector4[10];  // Max 10 positions for now
 
     [Header("Waves parameters")]
     public Vector4 waveA;
@@ -84,9 +83,6 @@ public class WaveController : MonoBehaviour
             parametersChanged = false;  // Reset change flag
         }
 
-        // Update object positions in the water (for ripples) if objects have moved
-        UpdateObjectPositions();
-
         UpdateRippleEffect();
     }
 
@@ -125,42 +121,6 @@ public class WaveController : MonoBehaviour
             waterMaterial.SetFloat("_HeightThreshold", heightThreshold);
             waterMaterial.SetFloat("_TransitionRange", transitionRange);
             waterMaterial.SetColor("_HighWaterColor", highWaterColor);
-        }
-    }
-
-    void UpdateObjectPositions()
-    {
-        bool positionsUpdated = false;
-        int objectCount = Mathf.Min(objects.Count, objectPositions.Length);  // Ensure we don't exceed array size
-
-        // Sort objects based on distance from the camera or some priority logic
-        objects.Sort((a, b) => Vector3.Distance(Camera.main.transform.position, a.transform.position)
-                               .CompareTo(Vector3.Distance(Camera.main.transform.position, b.transform.position)));
-
-        // Update object positions only when there are changes and limit to the array size
-        for (int i = 0; i < objectCount; i++)
-        {
-            if (objects[i] != null && objectPositions[i] != (Vector4)objects[i].transform.position)
-            {
-                objectPositions[i] = objects[i].transform.position;
-                positionsUpdated = true;
-            }
-        }
-
-        // Reset any unused slots to Vector4.zero to avoid ghost ripples
-        for (int i = objectCount; i < objectPositions.Length; i++)
-        {
-            if (objectPositions[i] != Vector4.zero)
-            {
-                objectPositions[i] = Vector4.zero;
-                positionsUpdated = true;  // Flag positions as updated if changes were made
-            }
-        }
-
-        // Only update the shader if positions have changed
-        if (positionsUpdated && waterMaterial != null)
-        {
-            waterMaterial.SetVectorArray("_ObjectPositions", objectPositions);
         }
     }
 

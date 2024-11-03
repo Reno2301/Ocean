@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 150
-  speed: 75
+  speed: 80
 --- !u!114 &7335397649443137715
 MonoBehaviour:
   m_ObjectHideFlags: 0

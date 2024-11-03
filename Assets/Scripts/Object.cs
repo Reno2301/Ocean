@@ -52,7 +52,7 @@ public class Object : MonoBehaviour
             waveB = waterMaterial.GetVector("_WaveB");
             waveC = waterMaterial.GetVector("_WaveC");
             waveD = waterMaterial.GetVector("_WaveD");
-            waveE = waterMaterial.GetVector("_WaveE");
+            waveE = waterMaterial.GetVector("_WaveE"); 
         }
     }
 
@@ -107,7 +107,7 @@ public class Object : MonoBehaviour
             if (difference < 0)
             {
                 // Calculate the upward buoyancy force proportional to how far under water it is
-                Vector3 buoyancyForce = Vector3.up * floatingPower;
+                Vector3 buoyancyForce = Vector3.up * floatingPower * Mathf.Abs(difference);
                 rb.AddForceAtPosition(buoyancyForce, floaters[i].position, ForceMode.Force);
 
                 // Increment the number of floaters under water
