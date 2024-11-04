@@ -447,13 +447,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objects: []
-  waveA: {x: 1, y: 0, z: 0.25, w: 15}
-  waveB: {x: 1.1, y: 1.3, z: 0.25, w: 12}
-  waveC: {x: 1.2, y: 0.8, z: 0.15, w: 19}
-  waveD: {x: -0.3, y: -0.2, z: 0.2, w: 17}
-  waveE: {x: -0.5, y: -0.9, z: 0.1, w: 10}
-  heightThreshold: 0
-  transitionRange: 2
+  waveA: {x: 1, y: 1, z: 0.25, w: 50}
+  waveB: {x: 1, y: 0.6, z: 0.2, w: 27}
+  waveC: {x: 1, y: 1.3, z: 0.25, w: 18}
+  waveD: {x: 1, y: 1.6, z: 0.1, w: 12}
+  waveE: {x: 1, y: 0.3, z: 0.05, w: 26}
+  heightThreshold: 5
+  transitionRange: 0
   highWaterColor: {r: 0.7490196, g: 0.8862745, b: 1, a: 1}
   waterMaterial: {fileID: 2100000, guid: cf0bac0391c0fcf459088613087ed3ee, type: 2}
   splashPrefab: {fileID: 3640793701984294370, guid: 620a176e327e8a446aff80352df5c12a, type: 3}
@@ -707,13 +707,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.49983326, y: -0, z: -0, w: 0.86612165}
-  m_LocalPosition: {x: 0, y: 68.4268, z: -52.301846}
+  m_LocalRotation: {x: 0.13033535, y: -0, z: -0, w: 0.99147004}
+  m_LocalPosition: {x: 0, y: 15.650002, z: -49.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 59.978, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 14.978, y: 0, z: 0}
 --- !u!1001 &1153169879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1199,7 +1199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5690694715520173305, guid: d0c894bdf02f81f4994f5a9bac30e7b7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
