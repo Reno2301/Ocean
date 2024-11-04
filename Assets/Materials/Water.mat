@@ -79,7 +79,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.7
     - _GlossyReflections: 1
-    - _HeightThreshold: 5
+    - _HeightThreshold: 0.5
     - _ImpactRadii: 2
     - _ImpactRadius: 3
     - _ImpactTime: 2
@@ -139,7 +139,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _TimeOffset: 0
-    - _TransitionRange: 0
+    - _TransitionRange: 2.5
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
