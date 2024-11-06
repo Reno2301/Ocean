@@ -172,7 +172,7 @@ Material:
     - _RippleCenter: {r: 0, g: 0, b: 0, a: 0}
     - _RippleCenters: {r: 0, g: 0, b: 0, a: 0}
     - _RippleTimes: {r: 0, g: 0, b: 0, a: 0}
-    - _WaveA: {r: 1, g: 1, b: 0.25, a: 50}
+    - _WaveA: {r: 1, g: 1, b: 0.25, a: 40}
     - _WaveB: {r: 1, g: 0.6, b: 0.2, a: 27}
     - _WaveC: {r: 1, g: 1.3, b: 0.25, a: 18}
     - _WaveD: {r: 1, g: 1.6, b: 0.1, a: 12}

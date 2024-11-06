@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class WaveController : MonoBehaviour
 {
+    public RawImage rippleTexture;
+
     [Header("References")]
     private GameObject waterObject;
     public List<GameObject> objects = new();  // Objects in the water
@@ -65,6 +67,8 @@ public class WaveController : MonoBehaviour
             splash.SetActive(false);  // Initially, all splashes are inactive
             splashPool.Enqueue(splash);  // Add them to the pool
         }
+
+        rippleTexture.texture = NextWaveState;
     }
 
     void InitializeTexture(ref RenderTexture tex)
@@ -124,18 +128,27 @@ public class WaveController : MonoBehaviour
         }
     }
 
+    private HashSet<GameObject> activeSplashObjects = new HashSet<GameObject>();  // Tracks objects with active splashes
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Object"))
         {
-            if (!objects.Contains(other.gameObject))
+            if (!activeSplashObjects.Contains(other.gameObject))
             {
-                objects.Add(other.gameObject);
-                parametersChanged = true;  // Mark parameters as changed
+                activeSplashObjects.Add(other.gameObject);  // Add to active splash list
+                TriggerSplash(other.transform.position);   // Trigger splash effect
+            }
+        }
+    }
 
-                // Trigger splash effect at the point of impact
-                TriggerSplash(other.transform.position);
-
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Object"))
+        {
+            if (activeSplashObjects.Contains(other.gameObject))
+            {
+                activeSplashObjects.Remove(other.gameObject); // Remove from active splash list
             }
         }
     }
