@@ -114,7 +114,7 @@ Material:
     - _OffsetZ8: 0
     - _OffsetZ9: 0
     - _Parallax: 0.02
-    - _RippleAmplitude: 1
+    - _RippleAmplitude: 1.3
     - _RippleAmplitude0: 0
     - _RippleAmplitude1: 0
     - _RippleAmplitude2: 0

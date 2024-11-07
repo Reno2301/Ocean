@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (obj.floatersUnderWater >= 1)
         {
-            rb.AddForce(transform.up * speed * Input.GetAxis("Vertical"));
+            rb.AddForce(transform.forward * speed * Input.GetAxis("Vertical"));
         }
     }
 }
